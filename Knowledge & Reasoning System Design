@@ -1,0 +1,61 @@
+Knowledge & Reasoning System Design
+
+Problem and Purpose
+  IT teams sometimes receive many alerts at the same time. For example, a website may stop working, the database connection may fail, or the server may have a problem. The support team needs to understand the problem quickly.
+ This AI system will collect the facts and check them using simple rules. It will help find the possible cause and suggest what the team should check next. Support engineers, developers, and incident managers will use this information. The system will help the team make decisions, but it will not replace people.
+
+Entities and Attributes
+  The system will use several important entities. The first entity is the incident, which represents the production problem. It can include information such as the incident ID, time, status, and severity.
+  Another entity is the service, such as a website or application. Its attributes can include the service name, owner, environment, and current availability. The system will also use alerts from monitoring tools. Each alert can include its type, value, time, and source.
+  A component is a technical part of the service, such as a database or server. Its attributes can include its type, health status, host, and dependencies. The deployment entity represents a recent software release and includes the version, deployment time, result, and rollback status.
+  The final entity is an action. An action is a step taken to investigate or fix the problem. It can include the assigned owner, priority, approval status, and completion status.
+
+Relationships
+  The entities are connected to each other. An incident affects a service, such as a website or application. The service depends on components like a server or database.
+  Alerts show the status of these components. A deployment changes the service, and sometimes an incident happens after a new deployment.
+  The system can create an action to fix the incident. An engineer will be responsible for completing that action. These relationships help the system understand what happened and what should be done next.
+
+FACTS
+  Facts are the information that the AI system already knows about it. These facts may come from monitoring tools, system logs, deployment records, or reports from users and support engineers.
+  For example, the system may know that the customer website is unavailable. It may also know that the application cannot connect to the database. 
+  The system may also know that a new software version was deployed 20 minutes before the problem started. Another fact may show that the database health check is failing. Finally, the system may know that the problem is happening in the production environment and is affecting real customers.
+  The system will use these facts to check its rules. It can then find possible causes and suggest what the support team should do next.
+
+
+RULES
+  Rules tell the AI system how to use the facts and make new conclusions. Each rule has a condition and a result. The system checks whether the required facts are available. If the conditions are met, it adds a new conclusion.
+Rule 1: If the website is unavailable and the application cannot connect to the database, then the system identifies a possible database problem.
+Rule 2: If there is a possible database problem and the database health check is failing, then the system recommends checking the database service.
+Rule 3: If the database service has a problem and the server’s CPU usage is above 90%, then the system marks the incident as urgent.
+Rule 4: If the incident is urgent and it started shortly after a new deployment, then the system recommends reviewing the deployment and considering a rollback.
+Rule 5: If the incident affects the production environment, then the system notifies the incident manager and the service owner.
+Rule 6: If the service owner approves the rollback, then the system creates a rollback task and assigns it to an engineer.
+  These rules create a reasoning chain. For example, the first rule identifies a possible database problem. That conclusion supports the second rule. The next conclusions can then lead the system to classify the incident as urgent and recommend a rollback review.
+
+Inference
+  The system knows that the website is not working and the database connection has failed.
+Rule 1 says that these two problems may mean there is a database issue.
+Because both facts are true, the system concludes that the database may have a problem.
+ 
+
+Reasoning Strategy
+  Forward chaining would be the main reasoning method for this system. It starts with the facts that are already known. These facts may come from system alerts, logs, monitoring tools, or support tickets.
+  For example, the system may know that the website is unavailable and the database connection has failed. It checks these facts against its rules. When the facts match a rule, the system creates a new conclusion, such as a possible database problem. It continues checking the rules until it cannot find any more conclusions.
+  Backward chaining can also be useful when an engineer asks a specific question. For example, the engineer may ask, “Should we check the database service?” The system starts with this possible conclusion and works backward. It checks which rules support that conclusion and whether the required facts are available.
+  Using both methods makes the system more useful. Forward chaining helps the system respond automatically when new alerts arrive. Backward chaining helps engineers investigate a specific problem or question. However, the system should only give recommendations. Important actions should still be reviewed and approved by a person.
+
+Limitations
+  One limitation is missing information. The system may not receive all the facts about the problem. For example, a monitoring tool may not work, or a log may be missing. Without enough information, the system may not find the real cause.
+  Another limitation is incorrect or old information. Some rules may be wrong or may not match the current system. This can cause the system to give a wrong recommendation.
+  Some rules may also conflict with each other. For example, one rule may say to restart the database, while another rule may say not to restart it. A person should review the situation and make the final decision.
+  The system may also be uncertain about the cause. A database connection problem could come from the database, network, or application. The system should show that its answer is only a possible cause.
+
+Human Oversight
+  The system can automatically collect facts from alerts, logs, and monitoring tools. It can connect related alerts, identify possible problems, calculate the incident level, and suggest simple checks. It can also notify the correct support team and prepare a short incident summary.
+  A person should review any action that could affect the production system or customer data. For example, a person should approve restarting a database, rolling back a deployment, changing system access, or turning off a service.
+  The AI system should explain which facts and rules were used to make its recommendation. This will help the support team understand and check the result. The incident manager or service owner should make the final decision for important actions.
+
+
+
+
+
